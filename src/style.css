@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+@import "../node_modules/sweetalert2/dist/sweetalert2.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+@theme  {
+  --font-oswald: 'Oswald', sans-serif;
+}

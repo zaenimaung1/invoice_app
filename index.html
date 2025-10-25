@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/src/style.css" rel="stylesheet" />
+  <title>KiBo Invoice App</title>
+</head>
+
+<body class="min-h-screen flex flex-col bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
+
+  <!-- Main Wrapper -->
+  <main class="flex flex-col flex-1">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md dark:bg-gray-800 ">
+      <div class="container mx-auto p-4">
+        <h1 class="font-oswald font-bold text-3xl text-gray-800 dark:text-white">KiBo.</h1>
+        <p class="text-blue-500">Invoice App for Shop</p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="flex-1 py-10">
+      <div class="container mx-auto px-6 space-y-10 max-w-6xl">
+
+        <!-- Form Card -->
+        <div class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6">
+          <h2 class="text-lg font-semibold mb-6 border-b border-gray-200 dark:border-gray-700 pb-2">
+            Add New Invoice Record
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+            <!-- Product Select -->
+            <div>
+              <label for="Products" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                Select a Product
+              </label>
+              <select id="Products"
+                class="w-full p-2.5 border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <option selected disabled>Choose a product</option>
+                <option value="apple">Apple</option>
+                <option value="grape">Grape</option>
+                <option value="orange">Orange</option>
+                <option value="mango">Mango</option>
+              </select>
+            </div>
+
+            <!-- Customer Name -->
+            <div>
+              <label for="first_name" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                Customer Name
+              </label>
+              <input type="text" id="first_name"
+                class="w-full p-2.5 border border-gray-300 rounded-lg text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                placeholder="Enter customer name" required />
+            </div>
+
+            <!-- Add Record Button -->
+            <div class="flex justify-end md:justify-start">
+              <button type="button"
+                class="w-full md:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-2.5 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition-all">
+                ➕ Add Record
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6">
+          <h2 class="text-lg font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+            Invoice Records
+          </h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th class="px-6 py-3 ">Product Name</th>
+                  <th class="px-6 py-3 text-end">Price</th>
+                  <th class="px-6 py-3 text-end">Quantity</th>
+                  <th class="px-6 py-3 text-end">Total Cost</th>
+                  <th class="px-6 py-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                  <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Apple</td>
+                  <td class="px-6 py-4 text-end">$2.99</td>
+                  <td class="px-6 py-4 text-end">3</td>
+                  <td class="px-6 py-4 text-end">$8.97</td>
+                  <td class="px-6 py-4 text-right">
+                    <button class="text-red-500 hover:underline">Remove</button>
+                  </td>
+                </tr>
+                <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                  <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Orange</td>
+                  <td class="px-6 py-4 text-end">$1.50</td>
+                  <td class="px-6 py-4 text-end">5</td>
+                  <td class="px-6 py-4 text-end">$7.50</td>
+                  <td class="px-6 py-4 text-right">
+                    <button class="text-red-500 hover:underline">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- side bar-->
+    <section
+  id="inventoryPanel"
+  class="fixed right-0 top-0 h-screen w-[400px] border-l border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 flex flex-col shadow-lg  duration-300 translate-x-0">
+
+  <!-- Header -->
+  <header class="bg-white dark:bg-gray-800 shadow-md relative">
+    <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-start">
+      <div>
+        <h1 class="font-oswald font-bold text-2xl text-gray-800 dark:text-white">Manage Inventory</h1>
+        <p class="text-blue-500 text-sm">Available Items</p>
+      </div>
+
+      <!-- Close Button -->
+      <button id="closePanelBtn"
+        class="text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition text-xl font-bold leading-none">
+        ✖
+      </button>
+    </div>
+  </header>
+
+  <!-- Items List -->
+  <div class="flex-1 overflow-y-auto p-4 space-y-3">
+    <div
+      class="flex justify-between items-center p-4 border border-blue-300 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition">
+      <div>
+        <h2 class="font-semibold text-gray-800 dark:text-white">Apple</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Stock: 30 pcs</p>
+      </div>
+      <span class="font-bold text-amber-600 dark:text-blue-400">500 MMK</span>
+    </div>
+
+    <div
+      class="flex justify-between items-center p-4 border border-blue-300 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition">
+      <div>
+        <h2 class="font-semibold text-gray-800 dark:text-white">Orange</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Stock: 25 pcs</p>
+      </div>
+      <span class="font-bold text-amber-600 dark:text-blue-400">400 MMK</span>
+    </div>
+  </div>
+
+  <!-- Footer (Add Item Form) -->
+  <footer class="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+    <form class="flex flex-col gap-3">
+      <div class="flex gap-2">
+        <input type="text" placeholder="Product name"
+          class="flex-1 p-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+          required />
+
+        <input type="number" placeholder="Price"
+          class="w-28 p-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+          required />
+      </div>
+
+      <button type="submit"
+        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition">
+        ➕ Add Item
+      </button>
+    </form>
+  </footer>
+</section>
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 shadow-inner mt-auto container ">
+      <div class="container mx-auto p-4 flex justify-end gap-3">
+        <button
+          class="py-2.5 px-5 text-sm font-medium text-gray-700 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600">
+          📦 Manage Inventory
+        </button>
+        <button
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          🖨️ Print
+        </button>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
