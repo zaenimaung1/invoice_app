@@ -1,4 +1,4 @@
-import { inventoryPanel, manageInventoryBtn } from "./selectors";
+import { inventoryPanel,  } from "./selectors";
 
 
 export const handleManageInventoryBtn = () => {
@@ -10,3 +10,6 @@ export const handleManageInventoryBtn = () => {
 export const handleClosePanelBtn = () => {
     inventoryPanel.classList.add('translate-x-full');
 };
+
+
+
