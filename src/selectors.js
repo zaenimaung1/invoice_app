@@ -16,5 +16,5 @@ export const noRecord = document.querySelector('#noRecord');
 export const totalAmount = document.querySelector('#totalAmount');
 export const taxAmount = document.querySelector('#taxAmount');
 export const netTotal = document.querySelector('#netTotal');
-
+export const printBtn = document.querySelector('#print-btn');
 

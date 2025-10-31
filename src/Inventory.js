@@ -11,30 +11,34 @@ import { products } from "./state";
 // Prevent form submission default and append the new item to the list
 export const addNewProductHandler = () => {
   const id = uuidv4();
+
+  // create UI card
   const fragment = createProductCard(
     id,
     productName.value,
     productPrice.valueAsNumber
   );
-
   listGroup.appendChild(fragment);
-  productSelect.append(
-    new Option(`${productName.value} - ${productName.valueAsNumber}`, id)
-  );
-  // clear inputs after adding
-  productName.value = "";
-  productPrice.value = "";
 
-  //proudctadd
-
+  // add to state BEFORE clearing inputs
   products.push({
     id: id,
     name: productName.value,
     price: productPrice.valueAsNumber,
   });
 
+  // update dropdown option
+  productSelect.append(
+    new Option(`${productName.value} - ${productPrice.valueAsNumber} MMK`, id)
+  );
+
+  // now safe to clear inputs
+  productName.value = "";
+  productPrice.value = "";
+
   console.log(products);
 };
+
 export const productRender = (products) => {
   products.forEach(({ id, name, price }) => {
     listGroup.appendChild(createProductCard(id, name, price));

@@ -12,4 +12,4 @@ export const handleClosePanelBtn = () => {
 };
 
 
-
+export const handlePrintBtn = () => window.print();

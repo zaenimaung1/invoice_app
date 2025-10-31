@@ -1,4 +1,5 @@
 import { createRecordForm, netTotal, recordGroup, recordTemplate, totalAmount, taxAmount, noRecord } from "./selectors";
+import Swal from 'sweetalert2';
 import { products } from "./state";
 
 export const createRecordFormHandler = (event) => {
@@ -14,11 +15,41 @@ export const createRecordFormHandler = (event) => {
     );
   }
   if (!currentProduct) return; // nothing selected / invalid value
-  recordGroup.append(createRowTemplate(currentProduct, formData.get("quantity")));
-  // hide the no-record message when we have at least one row
-  if (noRecord) noRecord.style.display = 'none';
-  createRecordForm.reset();
-  updateTotals();
+
+  const addQty = Number(formData.get("quantity")) || 1;
+  // check if this product already exists in the current invoice rows
+  const existingRow = recordGroup.querySelector(`.record-row[data-id="${currentProduct.id}"]`);
+  if (existingRow) {
+    // ask user whether to add the quantity to existing row or cancel
+    Swal.fire({
+      title: `${currentProduct.name} is already in the invoice`,
+      text: `Do you want to add ${addQty} more to the existing quantity?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Add',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const qtyEl = existingRow.querySelector('.product-row-quantity');
+        const priceEl = existingRow.querySelector('.product-row-price');
+        const costEl = existingRow.querySelector('.product-row-cost');
+        let qty = Number(qtyEl.innerText) || 0;
+        qty += addQty;
+        qtyEl.innerText = qty;
+        const price = parseFloat(priceEl.innerText) || 0;
+        costEl.innerText = (price * qty) + ' MMK';
+        updateTotals();
+        createRecordForm.reset();
+      }
+      // if cancelled, do nothing and leave the form as-is
+    });
+  } else {
+    recordGroup.append(createRowTemplate(currentProduct, addQty));
+    // hide the no-record message when we have at least one row
+    if (noRecord) noRecord.style.display = 'none';
+    createRecordForm.reset();
+    updateTotals();
+  }
 };
 
 export const createRowTemplate = ({ id, name, price }, quantity) => {
@@ -77,12 +108,51 @@ const toggleNoRecord = () => {
 
 // Event delegation to handle remove actions
 recordGroup.addEventListener('click', (e) => {
-  const btn = e.target.closest && e.target.closest('.record-remove');
-  if (!btn) return;
-  const row = btn.closest('.record-row');
-  if (row) {
-    row.remove();
+  // remove button
+  const removeBtn = e.target.closest && e.target.closest('.record-remove');
+  if (removeBtn) {
+    const row = removeBtn.closest('.record-row');
+    if (row) {
+      row.remove();
+      updateTotals();
+    }
+    return;
+  }
+
+  // increase quantity
+  const incBtn = e.target.closest && e.target.closest('.qty-increase');
+  if (incBtn) {
+    const row = incBtn.closest('.record-row');
+    if (!row) return;
+    const qtyEl = row.querySelector('.product-row-quantity');
+    const priceEl = row.querySelector('.product-row-price');
+    const costEl = row.querySelector('.product-row-cost');
+    let qty = Number(qtyEl.innerText) || 0;
+    qty += 1;
+    qtyEl.innerText = qty;
+    const price = parseFloat(priceEl.innerText) || 0;
+    costEl.innerText = (price * qty) + ' MMK';
     updateTotals();
+    return;
+  }
+
+  // decrease quantity (min 1)
+  const decBtn = e.target.closest && e.target.closest('.qty-decrease');
+  if (decBtn) {
+    const row = decBtn.closest('.record-row');
+    if (!row) return;
+    const qtyEl = row.querySelector('.product-row-quantity');
+    const priceEl = row.querySelector('.product-row-price');
+    const costEl = row.querySelector('.product-row-cost');
+    let qty = Number(qtyEl.innerText) || 0;
+    if (qty > 1) {
+      qty -= 1;
+      qtyEl.innerText = qty;
+      const price = parseFloat(priceEl.innerText) || 0;
+      costEl.innerText = (price * qty) + ' MMK';
+      updateTotals();
+    }
+    return;
   }
 });
 
