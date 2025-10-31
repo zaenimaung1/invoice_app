@@ -12,4 +12,14 @@ export const handleClosePanelBtn = () => {
 };
 
 
-export const handlePrintBtn = () => window.print();
+
+    // ✅ Corrected Code Pattern for iOS
+export const handlePrint = () => {
+  // 1. Immediately call the print function.
+  window.print(); 
+
+  setTimeout(() => {
+    updateInvoiceStatus(); // e.g., Mark as printed
+  }, 100); 
+};
+

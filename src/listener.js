@@ -1,4 +1,4 @@
-import {  handleClosePanelBtn, handleManageInventoryBtn, handlePrintBtn } from "./handlers";
+import {  handleClosePanelBtn, handleManageInventoryBtn, handlePrint,  } from "./handlers";
 import { addNewProductHandler } from "./Inventory";
 import { createRecordFormHandler } from "./record";
 import { manageInventoryBtn, productAddBtn, closePanelBtn, createRecordForm, printBtn } from "./selectors";
@@ -8,7 +8,7 @@ const listener= () => {
     closePanelBtn.addEventListener('click',handleClosePanelBtn);
     productAddBtn.addEventListener('click',addNewProductHandler);
     createRecordForm.addEventListener('submit',createRecordFormHandler);
-    printBtn.addEventListener('click',handlePrintBtn )
+    printBtn.addEventListener('click',handlePrint )
     
 }
 
